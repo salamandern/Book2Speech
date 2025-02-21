@@ -32,3 +32,6 @@ The application uses a Langgraph-based LLM pipeline with several key stages:
 ## Installation
 
 1. Clone the repository:
+2. Create a .env file and store the Gemini API key under the following variable name GEMINI_API_KEY= xxx
+3. Change the text in the input state in the prototype code
+4. Run the python file
