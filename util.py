@@ -16,23 +16,38 @@
 
 import json
 import os
+
 def load_json(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
         data = json.load(file)
     return data
 
-def loopeo(personaje):
+def extrac_dialogo(personaje):
     tuple_per = []
     for index, element in enumerate(json_dict["segments"]):
         if element["speaker"]==personaje:
             tuple_per.append((index,element["text"]))
     return tuple_per
 
+def get_all_characters(json_data):
+    #lista de personajes unitcos
+    all_characters = set()
+    
+    # todos los personajes
+    for segment in json_data["segments"]:
+        if "speaker" in segment and segment["speaker"]:  # Check if speaker exists and is not empty
+            all_characters.add(segment["speaker"])
+    
+    return all_characters
+
+
 if __name__ == "__main__":
-    file_path = r"C:\Users\JJota\Downloads\chattts\ChatTTS\text.json"
+    file_path = r"C:\Users\JJota\Book2Speech\text.json"
     json_dict = load_json(file_path)
-    personaje="Davos"
-    personaje_dict=loopeo(personaje)
-    if json_dict is not None:
-        print("Extracted Dictionary:")
-        print(personaje_dict)
+    
+    # Get all unique characters
+    all_characters = get_all_characters(json_dict)
+    
+    # Print the set of all characters
+    print("All characters in the JSON file:")
+    print(all_characters)
