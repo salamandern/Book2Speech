@@ -14,7 +14,7 @@ def loopeo(personaje, json_dict):
             tuple_per.append((index,element["text"]))
     return tuple_per
 
-def load_pdf_test(path):
+def load_pdf_text(path):
 
     try:
         reader = PdfReader(path)
