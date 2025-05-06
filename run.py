@@ -1,5 +1,3 @@
-
-
 from segmentation_graph import *
 
 
@@ -9,31 +7,21 @@ load_dotenv()
 
 def main():
     """
-    Main function to create and run the langgraph graph
+    Main function to test the Book2speech code
     """
+    
     app = create_workflow()
+    initial_state = AppState(input_text=example_text)
+    print("\nInvoking workflow...")
+    config = {"recursion_limit": 50}
+    final_state_dict = app.invoke(initial_state, config=config)
+    final_state_obj = AppState.parse_obj(final_state_dict)
+    print("\n--- Workflow Execution Complete ---")
+    print("\n--- Generating Pipeline Output JSON ---")
+    pipeline_json_output = format_final_output(final_state_obj)
+    print(json.dumps(pipeline_json_output, indent=2))
 
-    text_path = r"texts\john_snow_chapter.txt"
-
-    input_text = open(text_path, "r").read()
     
-    input_state = {
-        "input_text": input_text
-    }
-    
-    try:
-        final_state = app.invoke(input_state)
-        print("\nWorkflow Results:")
-        print("----------------")
-
-        #print(f"Original Text: {final_state.input_text}")
-        print(f"Segments: {final_state["segments"]}")
-        print(f"Final Proofread Text: {final_state["proofread_text"]}")
-        # print(f"Quality Score: {final_state["metadata"].get('quality_score')}")
-        print(f"Metadata: {final_state["metadata"]}")
-    except Exception as e:
-        print(f"Error during workflow execution: {str(e)}")
-        raise e
 
 if __name__ == "__main__":
     main()
