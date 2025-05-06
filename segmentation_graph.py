@@ -341,35 +341,3 @@ def format_final_output(final_state: AppState) -> Dict[str, Any]:
         # }
     }
     return pipeline_output
-
-
-if __name__ == "__main__":
-    print("--- Running Text Processing Workflow ---")
-
-    example_text = """
-    The old house stood on a hill overlooking the town. Inside, shadows danced.
-    "Is anyone there?" whispered Elias, his voice trembling slightly. Footsteps echoed from upstairs.
-    Narrator: He clutched the rusty key tighter.
-    A voice, cold and distant, replied, "We have been waiting." it said
-    Elias: "Waiting for what?". He wishd he hadnt come.
-    """
-
-    app = create_workflow()
-    initial_state = AppState(input_text=example_text)
-
-    print("\nInvoking workflow...")
-    config = {"recursion_limit": 50}
-    final_state_dict = app.invoke(initial_state, config=config)
-
-    # Parse the final state dictionary back into an AppState object for easy access
-    final_state_obj = AppState.parse_obj(final_state_dict)
-
-    print("\n--- Workflow Execution Complete ---")
-
-    print("\n--- Generating Pipeline Output JSON ---")
-    pipeline_json_output = format_final_output(final_state_obj)
-
-    print(json.dumps(pipeline_json_output, indent=2))
-
-    print("\n--- End of Report ---")
-
